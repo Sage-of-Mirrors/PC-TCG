@@ -5,12 +5,15 @@
 #include <thread>
 #include <mutex>
 
-std::thread s_connection_thread;
-std::queue<std::unique_ptr<sf::TcpSocket>> s_waiting_socks;
-std::queue<std::unique_ptr<sf::TcpSocket>> s_waiting_clocks;
+namespace GBAConnect {
+	extern std::thread s_connection_thread;
+	extern std::queue<std::unique_ptr<sf::TcpSocket>> s_waiting_socks;
+	extern std::queue<std::unique_ptr<sf::TcpSocket>> s_waiting_clocks;
 
-std::mutex s_cs_gba;
-std::mutex s_cs_gba_clk;
+	extern std::mutex s_cs_gba;
+	extern std::mutex s_cs_gba_clk;
 
-int s_num_connected;
-bool IsServerRunning;
+	extern int s_num_connected;
+	extern uint32_t GC_CPU_Clock;
+	extern bool IsServerRunning;
+}
