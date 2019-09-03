@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(SolutionDir)Debug;$(LibraryPath)</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)sa2-mod-loader\SA2ModLoader\include;$(SolutionDir)libgbacom\libgbacom\include</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -97,12 +97,14 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalOptions>/std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(SolutionDir)sa2-mod-loader\SA2ModLoader\include;$(SolutionDir)libgbacom\libgbacom\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>libgbacom.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libgbacom.lib;sfml-network-s.lib;sfml-system-s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\Github\PC-TCG\libgbacom\libgbacom\lib\SFML;D:\Github\PC-TCG\Debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -186,6 +188,11 @@
     <ClInclude Include="include\ninja_functions.h" />
     <ClInclude Include="include\stdafx.h" />
     <ClInclude Include="include\targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\libgbacom\libgbacom\libgbacom.vcxproj">
+      <Project>{41cfe11f-6264-49fb-8a84-7192fde631e2}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
