@@ -4,3 +4,6 @@
 [submodule "SFML"]
 	path = SFML
 	url = https://github.com/SFML/SFML.git
+[submodule "libgbacom"]
+	path = libgbacom
+	url = https://github.com/Sage-of-Mirrors/libgbacom.git
