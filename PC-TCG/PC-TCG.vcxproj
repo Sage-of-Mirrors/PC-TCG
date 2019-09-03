@@ -171,12 +171,6 @@
     <ClCompile Include="src\al_gba_manager.cpp" />
     <ClCompile Include="src\al_odekakemenu.cpp" />
     <ClCompile Include="src\al_ui.cpp" />
-    <ClCompile Include="src\GBADevice.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\GBAServer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ninja_functions.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
@@ -188,18 +182,9 @@
     <ClInclude Include="include\al_odekakemenu.h" />
     <ClInclude Include="include\al_ui.h" />
     <ClInclude Include="include\ChaoMain.h" />
-    <ClInclude Include="include\Constants.h" />
-    <ClInclude Include="include\GBADevice.h" />
-    <ClInclude Include="include\GBAServer.h" />
-    <ClInclude Include="include\JoybusEnums.h" />
     <ClInclude Include="include\ninja_functions.h" />
     <ClInclude Include="include\stdafx.h" />
     <ClInclude Include="include\targetver.h" />
-    <ClInclude Include="include\Threads.h" />
-    <ClInclude Include="include\Util.h" />
-    <ClInclude Include="src\Util.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-    </ClInclude>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
