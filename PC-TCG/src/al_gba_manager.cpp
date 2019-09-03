@@ -1,5 +1,6 @@
 #include "../include/stdafx.h"
-#include "../../sa2-mod-loader/SA2ModLoader/include/SA2ModLoader.h"
+
+#include <SA2ModLoader.h>
 
 int sub_716B00(int a1)
 {

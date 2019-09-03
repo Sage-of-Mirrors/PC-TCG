@@ -1,4 +1,4 @@
-#include "../../sa2-mod-loader/SA2ModLoader/include/SA2ModLoader.h"
+#include <SA2ModLoader.h>
 
 
 struct ChaoHudThingB

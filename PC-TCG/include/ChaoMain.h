@@ -1,4 +1,4 @@
-#include "../../sa2-mod-loader/SA2ModLoader/include/SA2ModLoader.h"
+#include <SA2ModLoader.h>
 
 DataPointer(NJS_TEXLIST, AL_BODY, 0x013669FC);
 DataPointer(NJS_TEXLIST, AL_EYE_TEXLIST, 0x01366AC4);

@@ -1,4 +1,5 @@
 #include "../include/stdafx.h"
+
 #include "../include/ninja_functions.h"
 #include "../include/al_odekakemenu.h"
 #include "../include/alo_odekake_pickup.h"

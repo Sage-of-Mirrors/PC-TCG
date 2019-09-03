@@ -1,5 +1,7 @@
 #include "../include/stdafx.h"
-#include "../../sa2-mod-loader/SA2ModLoader/include/SA2ModLoader.h"
+
+#include <SA2ModLoader.h>
+
 #include "../include/al_ui.h"
 #include "../include/al_gba_manager.h"
 #include "../include/ninja_functions.h"

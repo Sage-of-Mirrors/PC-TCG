@@ -1,4 +1,4 @@
-#include "../../sa2-mod-loader/SA2ModLoader/include/SA2ModLoader.h"
+#include <SA2ModLoader.h>
 
 #pragma pack(push, 8)
 struct __declspec(align(4)) MessageFontThing

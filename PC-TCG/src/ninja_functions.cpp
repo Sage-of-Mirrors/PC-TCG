@@ -1,6 +1,9 @@
 #include "../include/stdafx.h"
-#include "../include/ninja_functions.h"
+
 #include <math.h>
+
+#include "../include/ninja_functions.h"
+
 void  njCalcVector(NJS_VECTOR* a1, NJS_VECTOR* a2, NJS_MATRIX_PTR a3)
 {
 	Float v3; // ST00_4

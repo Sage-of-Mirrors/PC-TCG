@@ -1,6 +1,7 @@
 #pragma once
 #include "../include/stdafx.h"
-#include "../../sa2-mod-loader/SA2ModLoader/include/SA2ModLoader.h"
+
+#include <SA2ModLoader.h>
 
 FastcallFunctionPointer(double, njCos, (signed int a1), 0x042AC30);
 FastcallFunctionPointer(double, njSin, (signed int a1), 0x0042AAB0);

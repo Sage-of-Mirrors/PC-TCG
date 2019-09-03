@@ -4,8 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PC-TCG", "PC-TCG\PC-TCG.vcxproj", "{81B64C2A-FB0F-4987-8420-66201CF8B96D}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SA2ModLoader", "sa2-mod-loader\SA2ModLoader\SA2ModLoader.vcxproj", "{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{41CFE11F-6264-49FB-8A84-7192FDE631E2} = {41CFE11F-6264-49FB-8A84-7192FDE631E2}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libgbacom", "libgbacom\libgbacom\libgbacom.vcxproj", "{41CFE11F-6264-49FB-8A84-7192FDE631E2}"
 EndProject
@@ -37,20 +38,6 @@ Global
 		{81B64C2A-FB0F-4987-8420-66201CF8B96D}.RelWithDebInfo|x64.Build.0 = Release|x64
 		{81B64C2A-FB0F-4987-8420-66201CF8B96D}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
 		{81B64C2A-FB0F-4987-8420-66201CF8B96D}.RelWithDebInfo|x86.Build.0 = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.Debug|x64.ActiveCfg = Debug|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.Debug|x86.ActiveCfg = Debug|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.Debug|x86.Build.0 = Debug|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.MinSizeRel|x64.ActiveCfg = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.MinSizeRel|x64.Build.0 = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.MinSizeRel|x86.ActiveCfg = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.MinSizeRel|x86.Build.0 = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.Release|x64.ActiveCfg = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.Release|x86.ActiveCfg = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.Release|x86.Build.0 = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.RelWithDebInfo|x64.Build.0 = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.RelWithDebInfo|x86.ActiveCfg = Release|Win32
-		{3BF5C1B2-E3A4-43E7-9C2A-E445810834DE}.RelWithDebInfo|x86.Build.0 = Release|Win32
 		{41CFE11F-6264-49FB-8A84-7192FDE631E2}.Debug|x64.ActiveCfg = Debug|x64
 		{41CFE11F-6264-49FB-8A84-7192FDE631E2}.Debug|x64.Build.0 = Debug|x64
 		{41CFE11F-6264-49FB-8A84-7192FDE631E2}.Debug|x86.ActiveCfg = Debug|Win32
