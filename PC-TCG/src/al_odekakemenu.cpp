@@ -53,12 +53,14 @@ void sub_72DC40()
 		AL_OdekakeMenuMaster_Data_ptr->field_1C = 1;
 	}
 }
+
 FastcallFunctionPointer(void, __fastcall Odekake_SetMenuStatus, (AL_OdekakeMenuMasterData1* a1, int a2), 0x0057E6D0);
 FastcallFunctionPointer(void, sub_5A6F50, (AL_OdekakeMenuMasterData1* a1), 0x5A6F50);
 ThiscallFunctionPointer(void, sub_5A6C20, (AL_OdekakeMenuMasterData1* a1), 0x5A6C20);
 FunctionPointer(void, __cdecl LargeTitleBarExecutor_Load, (char a1, float a2, float a3), 0x005ABD30);
 FunctionPointer(void, LoadNextChaoLevel, (int a1), 0x0052B5B0);
 FunctionPointer(signed int, sub_57E710, (), 0x57E710);
+
 void Odekake_PickUpMenu(AL_OdekakeMenuMasterData1* a1)
 {
 	if (AL_OdekakeMenuMaster_Data_ptr)
@@ -213,6 +215,7 @@ void Odekake_PickUpMenu(AL_OdekakeMenuMasterData1* a1)
 								//	{
 										goto LABEL_41;
 								//	}
+										
 								LABEL_49:
 									AL_MSGWarnKinderMessage_Init(80.0, 120.0, 480.0, 196.0);
 									sub_543800();
