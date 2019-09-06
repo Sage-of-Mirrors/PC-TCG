@@ -35,6 +35,7 @@
 #define ITEM_HATS 9
 
 #include <math.h>
+#include <SA2ModLoader.h>
 
 #include "../include/ninja_functions.h"
 #include "../include/al_odekakemenu.h"
@@ -203,16 +204,7 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 	}
 	
 	// Calculate the new selected row index. Allows selection to wrap - moving up from 0 moves to 3, and vice versa
-	menu_data->verticalSelect = (menu_data->verticalSelect + row_offset);
-
-	if (menu_data->verticalSelect < 0)
-	{
-		menu_data->verticalSelect = MAX_NUM_ROWS - 1;
-	}
-	else
-	{
-		menu_data->verticalSelect = menu_data->verticalSelect % MAX_NUM_ROWS;
-	}
+	menu_data->verticalSelect = (menu_data->verticalSelect + row_offset + MAX_NUM_ROWS) % MAX_NUM_ROWS;
 	
 	// The 4th row contains two buttons, "Back" and "Pick up." They're at columns 3 and 6, so we'll restrict selection
 	// to one or the other if the 4th row is selected.
@@ -230,16 +222,7 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 	else
 	{
 		// Calculate the new selected column index. Allows selection to wrap - moving left from 0 moves to 10, and vice versa
-		menu_data->horizontalSelect = (menu_data->horizontalSelect + col_offset);
-
-		if (menu_data->horizontalSelect < 0)
-		{
-			menu_data->horizontalSelect = MAX_NUM_COLS - 1;
-		}
-		else
-		{
-			menu_data->horizontalSelect = menu_data->horizontalSelect % MAX_NUM_COLS;
-		}
+		menu_data->horizontalSelect = (menu_data->horizontalSelect + col_offset + MAX_NUM_COLS) % MAX_NUM_COLS;
 	}
 	
 	// If we moved, play a sound
@@ -519,6 +502,15 @@ void Odekake_PickUpMenu_Wait_For_Transition_Out(AL_OdekakeMenuMasterData1* menu_
 	}
 }
 
+void Odekake_PickUpMenu_Backtrack(AL_OdekakeMenuMasterData1* menu_data)
+{
+	AL_OdekakeMenuMaster_Data_ptr->field_8 = 0; //Odekake_SetMenu(0);
+	
+	sub_7165D0();
+	//AL_OdekakeMenuMaster_Data_ptr->someCallBack(menu_data);
+	sub_57E680();
+}
+
 /* Main execution loop of the Pickup Menu. */
 void Odekake_PickUpMenu_rewrite(AL_OdekakeMenuMasterData1* menu_data) // sub_74CD80 in SADXPC
 {
@@ -574,6 +566,7 @@ void Odekake_PickUpMenu_rewrite(AL_OdekakeMenuMasterData1* menu_data) // sub_74C
 			Odekake_PickUpMenu_Wait_For_Transition_Out(menu_data);
 			break;
 		case PICKUP_MENU_BACKTRACK: // 17
+			Odekake_PickUpMenu_Backtrack(menu_data);
 			break;
 		case PICKUP_MENU_EXIT: // 18
 			break;

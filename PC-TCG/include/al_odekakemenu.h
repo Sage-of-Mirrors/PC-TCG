@@ -11,6 +11,9 @@ struct AL_OdekakeMenuMasterData1
 	int field_20;
 	int horizontalSelect;
 	int verticalSelect;
+	int field_2C;
+	int field_30;
+	void (*someCallBack)(AL_OdekakeMenuMasterData1*);
 };
 VoidFunc(sub_57E680, 0x57E680);
 
