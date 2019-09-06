@@ -3,7 +3,6 @@
 #define PICKUP_MENU_MAIN 3
 //...
 #define PICKUP_MENU_PICKUP_CHAO_WARNING 5
-//...
 #define PICKUP_MENU_PLAYER_CHOICE_YESNO 7
 #define PICKUP_MENU_CHECK_PLAYER_CHOICE 8
 #define PICKUP_MENU_SELECT_ITEM_FOR_PICKUP 9
@@ -128,6 +127,40 @@ int sub_74C620()
 	return result;
 }
 
+/* TODO: Performs a check on whether the garden the player came from has an open Chao slot. */
+bool Odekake_PickUpMenu_Garden_Chao_Slot_Available()
+{
+	return false;
+}
+
+/* Displays an error message to the player stating that Chao or eggs cannot be picked up from TCG because the garden is full. */
+void Odekake_PickUpMenu_Garden_Full_Error_Message(AL_OdekakeMenuMasterData1* menu_data)
+{
+	AL_MSGWarnKinderMessage_Init(80.0, 120.0, 480.0, 196.0);
+    /*
+    sub_72D880(0);
+    v20 = AL_MSGWarn_GetMessage(26); // "Your garden is full."
+    sub_72D8D0(0, (int)v20);
+    v21 = AL_MSGWarn_GetMessage(27); // "Unable to pick up anything."
+    sub_72D8D0(0, (int)v21);
+    sub_72D930(0);
+    */
+	Odekake_SetMenuStatus(menu_data, PICKUP_MENU_WAIT_FOR_TEXT_DRAW);
+}
+
+void Odekake_Pickup_Menu_Prepare_Item_Select(AL_OdekakeMenuMasterData1* menu_data)
+{
+	if (menu_data->horizontalSelect == SLOT_CHAO)
+	{
+		Odekake_SetMenuStatus(menu_data, 4);
+		return;
+	}
+	else if (menu_data->horizontalSelect > 0 && menu_data->horizontalSelect <= 10)
+	{
+		Odekake_SetMenuStatus(menu_data, PICKUP_MENU_SELECT_ITEM_FOR_PICKUP);
+	}
+}
+
 /* Main loop of the pickup menu. */
 void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 {
@@ -231,8 +264,29 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 					switch (menu_data->horizontalSelect)
 					{
 						case SLOT_CHAO:
+							// The SADX code checks the save file here to make sure that there are less than 24
+							// Chao in the save file. Is there a hard limit on the amount of Chao the save file
+							// can have?
+							if (!Odekake_PickUpMenu_Garden_Chao_Slot_Available())
+							{
+								// The if statement here is stubbed out, need to figure out what it was.
+								// Probably a GBA call? To make sure the GBA is still connected?
+								if (true)
+								{
+									Odekake_PickUpMenu_Garden_Full_Error_Message(menu_data);
+								}
+							}
 							break;
 						case SLOT_EGG:
+							if (!Odekake_PickUpMenu_Garden_Chao_Slot_Available())
+							{
+								Odekake_PickUpMenu_Garden_Full_Error_Message(menu_data);
+							}
+							else
+							{
+								// SADX checks something here against a value of 24. Another save slot check?
+								// If the check fails, we call Full_Error_Message again.
+							}
 							break;
 						case SLOT_ITEM_A:
 						case SLOT_ITEM_B:
@@ -243,7 +297,8 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 						case SLOT_ITEM_G:
 						case SLOT_ITEM_H:
 						case SLOT_ITEM_I:
-							int v18 = sub_717540(3);
+							// Need to check that there's an open item slot in the garden?
+							/*int v18 = sub_717540(3);
 							int v19 = sub_74C620() + v18;
 							int v17 = 0; //__OFSUB__(v19, 40);
 							int v16 = v19 - 40 < 0;
@@ -251,20 +306,20 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 							if (v16 ^ v17)
 							{
 								
+							}*/
+
+							if (true)
+							{
+								Odekake_PickUpMenu_Garden_Full_Error_Message(menu_data);
 							}
 							break;
 						default:
-							if (!menu_data->horizontalSelect)
-							{
-								Odekake_SetMenuStatus(menu_data, 4);
-								return;
-							}
-							else if (menu_data->horizontalSelect > 0 && menu_data->horizontalSelect <= 10)
-							{
-								Odekake_SetMenuStatus(menu_data, PICKUP_MENU_SELECT_ITEM_FOR_PICKUP);
-							}
+							PrintDebug("Bad Pickup Menu horizontal selection %i!", menu_data->horizontalSelect);
 							break;
 					}
+
+					// We did all our safety checks above, now we can actually process the selection.
+					Odekake_Pickup_Menu_Prepare_Item_Select(menu_data);
 				}
 			}
 			else
@@ -407,6 +462,7 @@ void Odekake_PickUpMenu_16(AL_OdekakeMenuMasterData1* menu_data)
 	}
 }
 
+/* Main execution loop of the Pickup Menu. */
 void Odekake_PickUpMenu(AL_OdekakeMenuMasterData1* menu_data) // sub_74CD80 in SADXPC
 {
 	if (!AL_OdekakeMenuMaster_Data_ptr)
