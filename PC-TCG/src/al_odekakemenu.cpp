@@ -1,4 +1,4 @@
-#include "../include/stdafx.h"
+/*#include "../include/stdafx.h"
 
 #include "../include/ninja_functions.h"
 #include "../include/al_odekakemenu.h"
@@ -60,6 +60,7 @@ ThiscallFunctionPointer(void, sub_5A6C20, (AL_OdekakeMenuMasterData1* a1), 0x5A6
 FunctionPointer(void, __cdecl LargeTitleBarExecutor_Load, (char a1, float a2, float a3), 0x005ABD30);
 FunctionPointer(void, LoadNextChaoLevel, (int a1), 0x0052B5B0);
 FunctionPointer(signed int, sub_57E710, (), 0x57E710);
+FunctionPointer(int, GetGardenChaoCount, (int garden_id), 0x005319F0);
 
 void Odekake_PickUpMenu(AL_OdekakeMenuMasterData1* a1)
 {
@@ -408,4 +409,4 @@ void __cdecl AL_OdekakeMenuMaster_(ObjectMaster* a1)
 		break;
 	}
 	AL_OdekakeMenuMaster_Data_ptr->field_1C = 0;
-}
+}*/
