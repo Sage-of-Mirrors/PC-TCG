@@ -20,15 +20,15 @@
 
 #define SLOT_CHAO 0
 #define SLOT_EGG  1
-#define SLOT_ITEM_A 2
-#define SLOT_ITEM_B 3
-#define SLOT_ITEM_C 4
-#define SLOT_ITEM_D 5
-#define SLOT_ITEM_E 6
-#define SLOT_ITEM_F 7
-#define SLOT_ITEM_G 8
-#define SLOT_ITEM_H 9
-#define SLOT_ITEM_I 10
+#define SLOT_RINGS 2
+#define SLOT_ITEM_A 3
+#define SLOT_ITEM_B 4
+#define SLOT_ITEM_C 5
+#define SLOT_ITEM_D 6
+#define SLOT_ITEM_E 7
+#define SLOT_ITEM_F 8
+#define SLOT_ITEM_G 9
+#define SLOT_ITEM_H 10
 
 #include "../include/ninja_functions.h"
 #include "../include/al_odekakemenu.h"
@@ -65,6 +65,7 @@ void Odekake_PickUpMenu_Wait_For_Init(AL_OdekakeMenuMasterData1* menu_data)
 	}
 }
 
+/* Kicks off a return to the main Chao Transporter menu. */
 void Odekake_PickupMenu_BeginBacktrack(AL_OdekakeMenuMasterData1* menu_data)
 {
 	menu_data->field_20 = 1;
@@ -72,6 +73,7 @@ void Odekake_PickupMenu_BeginBacktrack(AL_OdekakeMenuMasterData1* menu_data)
 	//PlaySound(610, 0, 0, 0);
 }
 
+/* Triggers the currently selected items to be transferred from the GBA to the garden. */
 void Odekake_PickUpMenu_BeginPickup(AL_OdekakeMenuMasterData1* menu_data)
 {
 	// sub_716C50();
@@ -133,7 +135,22 @@ bool Odekake_PickUpMenu_Garden_Chao_Slot_Available()
 	return false;
 }
 
-/* Displays an error message to the player stating that Chao or eggs cannot be picked up from TCG because the garden is full. */
+/* TODO: Performs a check on whether there is an open slot in the 24 slots */
+/* reserved for Chao in the Chao Garden save file. */
+bool Odekake_PickUpMenu_Chao_Save_Slot_Available()
+{
+	return false;
+}
+
+/* TODO: Performs a check on whether there is an open item slot in the garden */
+/* the player came from. */
+bool Odekake_PickUpMenu_Garden_Item_Slot_Available()
+{
+	return false;
+}
+
+/* Displays an error message to the player stating that Chao or eggs*/
+/* cannot be picked up from TCG because the garden is full. */
 void Odekake_PickUpMenu_Garden_Full_Error_Message(AL_OdekakeMenuMasterData1* menu_data)
 {
 	AL_MSGWarnKinderMessage_Init(80.0, 120.0, 480.0, 196.0);
@@ -148,6 +165,7 @@ void Odekake_PickUpMenu_Garden_Full_Error_Message(AL_OdekakeMenuMasterData1* men
 	Odekake_SetMenuStatus(menu_data, PICKUP_MENU_WAIT_FOR_TEXT_DRAW);
 }
 
+/* Switches the menu state for selecting items based on the currently selected slot. */
 void Odekake_Pickup_Menu_Prepare_Item_Select(AL_OdekakeMenuMasterData1* menu_data)
 {
 	if (menu_data->horizontalSelect == SLOT_CHAO)
@@ -215,9 +233,9 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 	}
 	
 	// The player wants to cancel!
-	else if (MenuButtons_Pressed[0] & Buttons_B)
+	if (MenuButtons_Pressed[0] & Buttons_B)
 	{
-		// We're already at the Back button (row 3, column 3), so pressing B will just initiate an exit
+		// We're already at the Back button (row 4, column 3), so pressing B will just initiate an exit
 		if (menu_data->verticalSelect == 3 && menu_data->horizontalSelect == 3)
 		{
 			Odekake_PickupMenu_BeginBacktrack(menu_data);
@@ -233,7 +251,7 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 	}
 	
 	// The player selected something!
-	if (MenuButtons_Pressed[0] & Buttons_A)
+	else if (MenuButtons_Pressed[0] & Buttons_A)
 	{
 		if (menu_data->verticalSelect == 3)
 		{
@@ -251,14 +269,19 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 			}
 		}
 		
+		// This probably ensures that there's a GBA actively connected.
 		if (int gba_value_8 = AL_GBAManagerExecutor_ptr->field_18[menu_data->verticalSelect + 1].field_8)
 		{
+			// Check if there's an item in this slot on the GBA side.
 			if (gba_value_8 == 3 && GBAManager_HasItemGBA(menu_data->verticalSelect + 1, menu_data->horizontalSelect))
 			{
+				// If the player has already selected the slot before, we will toggle the selection, removing it.
 				if (GBAManager_HasItem(menu_data->verticalSelect + 1, menu_data->horizontalSelect))
 				{
 					Odekake_SetMenuStatus(menu_data, PICKUP_MENU_SELECT_ITEM_FOR_PICKUP);
 				}
+				// The player has not previously selected this slot (or has already deselected it),
+				// so we'll go into selection logic.
 				else
 				{
 					switch (menu_data->horizontalSelect)
@@ -267,7 +290,7 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 							// The SADX code checks the save file here to make sure that there are less than 24
 							// Chao in the save file. Is there a hard limit on the amount of Chao the save file
 							// can have?
-							if (!Odekake_PickUpMenu_Garden_Chao_Slot_Available())
+							if (!Odekake_PickUpMenu_Garden_Chao_Slot_Available() || !Odekake_PickUpMenu_Chao_Save_Slot_Available())
 							{
 								// The if statement here is stubbed out, need to figure out what it was.
 								// Probably a GBA call? To make sure the GBA is still connected?
@@ -278,15 +301,15 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 							}
 							break;
 						case SLOT_EGG:
-							if (!Odekake_PickUpMenu_Garden_Chao_Slot_Available())
+							// Same checks as above, essentially? Eggs are just Chao with a type of 0...
+							if (!Odekake_PickUpMenu_Garden_Chao_Slot_Available() || Odekake_PickUpMenu_Chao_Save_Slot_Available())
 							{
 								Odekake_PickUpMenu_Garden_Full_Error_Message(menu_data);
+								return;
 							}
-							else
-							{
-								// SADX checks something here against a value of 24. Another save slot check?
-								// If the check fails, we call Full_Error_Message again.
-							}
+							break;
+						case SLOT_RINGS:
+							// Rings don't need any special checks; skip to selection.
 							break;
 						case SLOT_ITEM_A:
 						case SLOT_ITEM_B:
@@ -296,46 +319,35 @@ void Odekake_PickupMenu_Main(AL_OdekakeMenuMasterData1* menu_data)
 						case SLOT_ITEM_F:
 						case SLOT_ITEM_G:
 						case SLOT_ITEM_H:
-						case SLOT_ITEM_I:
-							// Need to check that there's an open item slot in the garden?
-							/*int v18 = sub_717540(3);
-							int v19 = sub_74C620() + v18;
-							int v17 = 0; //__OFSUB__(v19, 40);
-							int v16 = v19 - 40 < 0;
-							
-							if (v16 ^ v17)
-							{
-								
-							}*/
-
-							if (true)
+							if (!Odekake_PickUpMenu_Garden_Item_Slot_Available())
 							{
 								Odekake_PickUpMenu_Garden_Full_Error_Message(menu_data);
+								return;
 							}
 							break;
 						default:
 							PrintDebug("Bad Pickup Menu horizontal selection %i!", menu_data->horizontalSelect);
-							break;
+							return;
 					}
 
 					// We did all our safety checks above, now we can actually process the selection.
 					Odekake_Pickup_Menu_Prepare_Item_Select(menu_data);
 				}
 			}
-			else
-			{
-				Odekake_SetMenuStatus(menu_data, 4);
-			}
 		}
+		// There appears to be no GBA connected! Or maybe the Chao data hasn't been loaded...?
 		else
 		{
 			AL_MSGWarnKinderMessage_Init(80.0, 120.0, 480.0, 196.0);
-			// Warning messages go here, DX indices 12 and 13
+			// Warning messages go here, DX indices 12 and 13. They appear to be
+			// "Loading Chao Data." and "Do not disconnect the GBA cable."
 			Odekake_SetMenuStatus(menu_data, PICKUP_MENU_WAIT_FOR_TEXT_DRAW);
 		}
 	}
 }
 
+/* Increments a timer in the menu's struct and returns true if that timer reaches the value of max_time. */
+/* Used by states PICKUP_MENU_WAIT_FOR_MENU_EXIT, PICKUP_MENU_WAIT_FOR_BACKTRACK_60, and PICKUP_MENU_WAIT_FOR_BACKTRACK_30. */
 bool Odekake_PickUpMenu_Increment_Timer(AL_OdekakeMenuMasterData1* menu_data, int max_time)
 {
 	menu_data->field_10++;
@@ -348,6 +360,7 @@ bool Odekake_PickUpMenu_Increment_Timer(AL_OdekakeMenuMasterData1* menu_data, in
 	return false;
 }
 
+/* Toggles the selection of a Chao, an egg, or an item that can be picked up from the TCG. */
 void Odekake_PickUpMenu_Select_Item_For_Pickup(AL_OdekakeMenuMasterData1* menu_data, int row, int column)
 {
 	if (AL_GBAManagerExecutor_ptr)
@@ -370,6 +383,7 @@ void Odekake_PickUpMenu_Select_Item_For_Pickup(AL_OdekakeMenuMasterData1* menu_d
 	Odekake_SetMenuStatus(menu_data, PICKUP_MENU_MAIN);
 }
 
+/* Determines if the player said Yes or No to the TCG Chao pickup warning and responds accordingly. */
 void Odekake_PickUpMenu_Check_Player_Choice(AL_OdekakeMenuMasterData1* menu_data)
 {
 	if (!AL_MSGWarnDataArray[0].field_0)
@@ -403,12 +417,14 @@ void Odekake_PickUpMenu_Check_Player_Choice(AL_OdekakeMenuMasterData1* menu_data
 	}
 }
 
+/* Displays a warning message to the player describing how picking up a Chao from TCG works. */
 void Odekake_PickUpMenu_PickUp_Chao_Warning(AL_OdekakeMenuMasterData1* menu_data)
 {
 	AL_MSGWarnKinderMessage_Init(80.0, 60.0, 480.0, 196.0);
 	Odekake_SetMenuStatus(menu_data, PICKUP_MENU_PLAYER_CHOICE_YESNO);
 }
 
+/* Waits for 90 frames (?) before triggering an exit from the Chao Transporter back to the garden. */
 void Odekake_PickUpMenu_Wait_For_Menu_Exit(AL_OdekakeMenuMasterData1* menu_data)
 {
 	if (Odekake_PickUpMenu_Increment_Timer(menu_data, 90))
@@ -417,6 +433,7 @@ void Odekake_PickUpMenu_Wait_For_Menu_Exit(AL_OdekakeMenuMasterData1* menu_data)
 	}
 }
 
+/* Waits for 60 frames (?) before triggering a return to the main Chao Transporter menu. */
 void Odekake_PickUpMenu_Wait_For_Backtrack_60(AL_OdekakeMenuMasterData1* menu_data)
 {
 	if (Odekake_PickUpMenu_Increment_Timer(menu_data, 60))
@@ -425,6 +442,7 @@ void Odekake_PickUpMenu_Wait_For_Backtrack_60(AL_OdekakeMenuMasterData1* menu_da
 	}
 }
 
+/* Waits for 30 frames (?) before triggering a return to the main Chao Transporter menu. */
 void Odekake_PickUpMenu_Wait_For_Backtrack_30(AL_OdekakeMenuMasterData1* menu_data)
 {
 	if (Odekake_PickUpMenu_Increment_Timer(menu_data, 30))
@@ -433,6 +451,8 @@ void Odekake_PickUpMenu_Wait_For_Backtrack_30(AL_OdekakeMenuMasterData1* menu_da
 	}
 }
 
+/* Presents the player with a Yes or No choice, responding to the warning about the TCG Chao */
+/* overwriting the chao already in the GC garden. */
 void Odekake_PickUpMenu_Player_Choice_YesNo(AL_OdekakeMenuMasterData1* menu_data)
 {
 	// Yes-no messages and associated checking functions go here
