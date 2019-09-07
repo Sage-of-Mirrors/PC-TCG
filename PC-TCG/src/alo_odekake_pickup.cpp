@@ -336,17 +336,17 @@ void __cdecl sub_76BD10(ObjectMaster* a1)
 		{
 			sub_72DC40();
 		}
-		//v17 = __OFSUB__(v1->field_0, 5);
-		//v16 = (char)(v1->field_0 - 5) < 0;
+
 		v1->ringRotation += 512;
-		//if (v1->mode <= 5)
-		//{
-		//	if (sub_72DBF0())
-		//	{
-		//		v1->mode = 5;
-		//		v1->field_6 = 0;
-		//	}
-		//}
+
+		if (v1->mode < 5)
+		{
+			if (AL_OdekakeMenuMaster_Data_ptr->field_20)
+			{
+				v1->mode = 5;
+				v1->field_6 = 0;
+			}
+		}
 	}
 	else
 	{
