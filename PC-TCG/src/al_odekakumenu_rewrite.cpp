@@ -43,8 +43,8 @@
 #include "../include/al_gba_manager.h"
 #include "../include/al_msg_warn.h"
 
-DataPointer(int, unk_3CD35C4, 0x3CD35C4);
-DataPointer(int, unk_3CD35D4, 0x3CD35D4);
+DataPointer(int, dword_19F645C, 0x19F645C);
+//DataPointer(int, dword_19F6444, 0x19F6444);
 
 FastcallFunctionPointer(void, __fastcall Odekake_SetMenuStatus, (AL_OdekakeMenuMasterData1* a1, int a2), 0x0057E6D0);
 FastcallFunctionPointer(void, sub_5A6F50, (AL_OdekakeMenuMasterData1* a1), 0x5A6F50);
@@ -460,13 +460,13 @@ void Odekake_PickUpMenu_Player_Choice_YesNo(AL_OdekakeMenuMasterData1* menu_data
 
 void Odekake_PickUpMenu_Save_Data(AL_OdekakeMenuMasterData1* menu_data)
 {
-	if (!unk_3CD35D4)
+	if (!dword_19F6444)
 	{
 		Odekake_SetMenuStatus(menu_data, PICKUP_MENU_WAIT_FOR_MENU_EXIT);
 	}
 	else
 	{
-		// al_confirmsave_load_zero();
+		al_confirmsave_load_zero();
 		Odekake_SetMenuStatus(menu_data, PICKUP_MENU_WAIT_FOR_PICKUP_BEFORE_EXIT);
 	}
 }
@@ -488,7 +488,7 @@ void Odekake_PickUpMenu_4(AL_OdekakeMenuMasterData1* menu_data)
 
 void Odekake_PickUpMenu_Wait_For_Pickup_Before_Exit(AL_OdekakeMenuMasterData1* menu_data)
 {
-	if (!unk_3CD35C4)
+	if (!dword_19F645C)
 	{
 		Odekake_SetMenuStatus(menu_data, PICKUP_MENU_WAIT_FOR_MENU_EXIT);
 	}
